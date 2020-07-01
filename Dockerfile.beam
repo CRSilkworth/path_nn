@@ -1,0 +1,5 @@
+FROM mlp/beam:latest
+
+COPY ./ ./
+RUN mv data ~/
+ENV PYTHONPATH="/path_nn:${PYTHONPATH}"
