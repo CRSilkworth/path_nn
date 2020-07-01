@@ -1,0 +1,106 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+
+# Environment #
+###############
+venv*
+**/airflow.cfg
+airflow/*.cfg
+airflow/*.orig
+
+
+# Images #
+##########
+*.jpg
+*.jpeg
+*.pdf
+*.gif
+*.png
+*.svg
+*.ico
+
+# Data #
+########
+**checkpoint**
+*data*
+*.npy
+*.csv
+*.json
+*.pickle
+*h5
+*bk
+*tfrecords
+*tfrecord
+**/*_text/*
+*bz2
+*.index
+*.ckpt.*
+*.meta
+*.txt
+
+# Sensitive Info #
+##################
+startup.sh
+
+**/runs/**
+# Temp scripts #
+################
+temp*.py
+temp*.sh
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+**/logs/**
+*.db
+*.INFO.*
+*.log.*
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*-e
+
+# pycache #
+###########
+**/__pychache__/**
+
+# Notebooks extras #
+####################
+**/.ipynb_checkpoints/**
+
+
+# Exceptions #
+##############
+!**/test_data/**
+!**/test_runs/**
+!room_tag_predictor/conv/data/raw/*csv
+!data_pipeline/definition_jsons/*json
+!requirements.txt
