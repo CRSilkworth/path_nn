@@ -201,12 +201,13 @@ def trainer_factory(
   learning_rate: Learing rate for the optimizer
   pixel_key: the key of the input data.
   label_key: the key in of the output data.
+  num_pixels: size of the array of inputted num_pixels.
   width_dim: dimension of the matrix transformations at each layer in path nn.
   depth_dim: number of layers in the path nn.
   D: the maximum depth value.
   warmup_prop: the proportion of the training steps that are linearly increasing
-    to the maximum rate
-  cooldown_prop: the proportion of the training steps that are linearly decreasing
+    to the maximum rate.
+  cooldown_prop: the proportion of the training steps that are linearly decreasing.
     from the maximum rate back to zero.
   warm_start_from: The path of the model to warm start training from.
   save_summary_steps: How often to save a summary and log.
