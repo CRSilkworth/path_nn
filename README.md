@@ -57,9 +57,8 @@ cd path_nn/<mlp_subproject>/
 * Create or edit a beam pipeline file from the pipelines directory ({mlp_subproject}/pipelines/beam/). Adjust any of the input variables, i.e. the variables uppercased beginning with an underscore (e.g. \_NUM_TRAIN_STEPS) and run:
 ```
 docker run \
-  --gpus all \
-  -it -v $PWD:/tmp -w /tmp \
-  --rm path_nn/beam:latest \
+  --gpus all -it -v $PWD:/tmp -w /tmp --rm
+  path_nn/beam:latest \
   python {mlp_subproject}/pipelines/beam/{pipeline_file}
 ```
 Outputs will be written to a directory path_nn/runs/ by default.
