@@ -1,10 +1,10 @@
-"""Model definition for the BasicNN model."""
+"""Model definition for the SimplePathNN model."""
 import tensorflow as tf
 from typing import Optional, List
 
 
-class PathNN(tf.keras.Model):
-  """Basic classifier neural network model."""
+class SimplePathNN(tf.keras.Model):
+  """Basic path neural network model."""
 
   def __init__(
     self,
@@ -18,12 +18,12 @@ class PathNN(tf.keras.Model):
 
     Parameters
     ----------
-    num_labels: The total number of allowed labels.
-    hidden_layer_dims: The dimensions of the dense layers that combine the
-      non_string_key data and output from the bert model.
-
+    input_dim: dimension of the input before it's fed to the path nn.
+    width_dim: dimension of the matrix transformations at each layer in path nn.
+    depth_dim: number of layers in the path nn.
+    output_dim: dimension of the output to be converted to logits, fed the MSE, etc.
     """
-    super(PathNN, self).__init__()
+    super(SimplePathNN, self).__init__()
     self.input_dim = input_dim
     self.width_dim = width_dim
     self.depth_dim = depth_dim
@@ -41,9 +41,9 @@ class PathNN(tf.keras.Model):
 
     Parameters
     ----------
-    inputs: will be ignored. Only there to conform to keras model standard.
+    x: the raw input into the path nn.
+      shape = [batch_size, input_dim]
     traininig: Whether or not the model is training.
-    kwargs: Any data to be used in the prediction.
 
     Returns
     -------
