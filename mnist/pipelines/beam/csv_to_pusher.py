@@ -22,7 +22,7 @@ _RUNNER = 'beam'
 _EXAMPLE_CSV = os.path.join(os.environ['HOME'], 'data/mnist/train')
 
 # Set to timestamp of previous run if you want to continue old run.
-_RUN_STR = '2020-06-26-23-07-35'
+_RUN_STR = None
 _RUN_DIR = os.path.join('runs')
 
 # Define the preprocessing/feature parameters
@@ -75,7 +75,6 @@ trainer_fn = train.trainer_factory(
   T=_T,
   warmup_prop=_WARMUP_PROP,
   cooldown_prop=_COOLDOWN_PROP,
-  # warm_start_from=_WARM_START_FROM,
   save_summary_steps=_SAVE_SUMMARY_STEPS,
   save_checkpoints_secs=_SAVE_CHECKPOINT_SECS
 )
