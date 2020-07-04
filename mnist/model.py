@@ -12,7 +12,7 @@ class SimplePathNN(tf.keras.Model):
     width_dim: int,
     depth_dim: int,
     output_dim: int,
-    T: Optional[float] = 1.0
+    D: Optional[float] = 1.0
     ):
     """Construct an BasicNN model.
 
@@ -22,19 +22,20 @@ class SimplePathNN(tf.keras.Model):
     width_dim: dimension of the matrix transformations at each layer in path nn.
     depth_dim: number of layers in the path nn.
     output_dim: dimension of the output to be converted to logits, fed the MSE, etc.
+    D: the maximum depth value.
     """
     super(SimplePathNN, self).__init__()
     self.input_dim = input_dim
     self.width_dim = width_dim
     self.depth_dim = depth_dim
     self.output_dim = output_dim
-    self.delta_d = T/depth_dim
+    self.delta_d = D/depth_dim
 
     self.in_weights = tf.Variable(tf.random.normal([input_dim, width_dim]))
     self.alpha = tf.Variable(tf.zeros([width_dim, depth_dim]))
     self.beta = tf.Variable(tf.random.normal([width_dim, width_dim, depth_dim]))
     self.ouput_weights = tf.Variable(tf.random.normal([width_dim, output_dim]))
-    self.n_d = tf.range(0.0, T, self.delta_d)
+    self.n_d = tf.range(0.0, D, self.delta_d)
 
   def call(self, x, training=False, **kwargs):
     """Get the logits predicted by the model.

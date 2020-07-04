@@ -31,7 +31,7 @@ _LABEL_KEY = 'label'
 _NUM_PIXELS = 784
 _WIDTH_DIM = 256
 _DEPTH_DIM = 256
-_T = 2.0
+_D = 2.0
 
 # Define the training/model parameters
 _BATCH_SIZE = 2048
@@ -72,7 +72,7 @@ trainer_fn = train.trainer_factory(
   num_pixels=_NUM_PIXELS,
   width_dim=_WIDTH_DIM,
   depth_dim=_DEPTH_DIM,
-  T=_T,
+  D=_D,
   warmup_prop=_WARMUP_PROP,
   cooldown_prop=_COOLDOWN_PROP,
   save_summary_steps=_SAVE_SUMMARY_STEPS,

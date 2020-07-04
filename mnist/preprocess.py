@@ -67,9 +67,9 @@ def preprocess_factory(
 
   Parameters
   ----------
-  categorical_feature_keys: The keys of the categorical features.
-  numerical_feature_keys: The keys of the numerical features.
-  label_key: The key of the label
+  pixel_key: the key of the input data.
+  label_key: the key in of the output data.
+  num_pixels: size of the array of inputted num_pixels.
 
   Returns
   -------

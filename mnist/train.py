@@ -22,7 +22,7 @@ def estimator_builder(
   input_dim: int,
   width_dim: int,
   depth_dim: int,
-  T: float,
+  D: float,
   num_train_steps: int,
   num_warmup_steps: int,
   num_cool_down_steps: int,
@@ -33,18 +33,24 @@ def estimator_builder(
 
   Parameters
   ----------
-    run_config: The training run config for the estimator
-    hidden_layer_dims: The dimensions of the hidden layers after bert
+    run_config: the training run config for the estimator.
     vocabularies: Mapping from the categorical data key to the list of allowed
-      categorical values it can take
+      categorical values it can take.
+    pixel_key: the key of the input data.
+    label_key: the key in of the output data.
+    input_dim: dimension of the input before it's fed to the path nn.
+    width_dim: dimension of the matrix transformations at each layer in path nn.
+    depth_dim: number of layers in the path nn.
+    output_dim: dimension of the output to be converted to logits, fed the MSE,
+      etc.
+    D: the maximum depth value.
     num_train_steps: Total number of steps to train the model
     num_warmup_steps: How fast to warmup to the maximum learning rate.
+    num_cool_down_steps: How fast to decrease learning rate to zero.
     learning_rate: Learing rate for the optimizer
-    non_string_keys: The data keys that define what contextual information aside
-      from the request to use in the prediction.
     top_ks: The accuracies to include in the evaluation. A top_k accuracy being
       how often the true label is in the top_k predicted labels.
-
+    warm_start_from: path to base model to warm start from.
   Returns
   -------
     estimator: The estimator that will be used for training, eval and prediction
@@ -81,12 +87,12 @@ def estimator_builder(
     num_labels = len(all_labels)
 
     # Define the full model to be used in prediction.
-    path_nn = model.PathNN(
+    path_nn = model.SimplePathNN(
       input_dim=input_dim,
       width_dim=width_dim,
       depth_dim=depth_dim,
       output_dim=num_labels,
-      T=T
+      D=D
     )
 
     # One hot all the categorical variables
@@ -179,7 +185,7 @@ def trainer_factory(
   num_pixels: int,
   width_dim: int,
   depth_dim: int,
-  T: float,
+  D: float,
   warmup_prop: float,
   cooldown_prop: float,
   save_summary_steps: int,
@@ -192,20 +198,16 @@ def trainer_factory(
   Parameters
   ----------
   batch_size: the mini batch size to train with
-  vocab_file_path: The location of the vocab file for the bert model
-  bert_config_path: The location of the bert model configuration
-  bert_checkpoint_dir: The location of the pretrained bert model variables
-  max_seq_length: Maximum number of tokens in a request
   learning_rate: Learing rate for the optimizer
-  hidden_layer_dims: The dimensions of the hidden layers after bert
-  categorical_feature_keys: List[Text],
-  label_key: the data key of the label.
+  pixel_key: the key of the input data.
+  label_key: the key in of the output data.
+  width_dim: dimension of the matrix transformations at each layer in path nn.
+  depth_dim: number of layers in the path nn.
+  D: the maximum depth value.
   warmup_prop: the proportion of the training steps that are linearly increasing
     to the maximum rate
   cooldown_prop: the proportion of the training steps that are linearly decreasing
     from the maximum rate back to zero.
-  non_string_keys: The data keys that define what contextual information aside
-    from the request to use in the prediction.
   warm_start_from: The path of the model to warm start training from.
   save_summary_steps: How often to save a summary and log.
   save_checkpoints_secs: How often to save a checkpoint and evaluate the
@@ -294,7 +296,7 @@ def trainer_factory(
       input_dim=num_pixels,
       width_dim=width_dim,
       depth_dim=depth_dim,
-      T=T,
+      D=D,
       vocabularies=vocabularies,
       num_train_steps=hparams.train_steps,
       num_warmup_steps=int(hparams.train_steps * warmup_prop),
